@@ -1,0 +1,32 @@
+stages:
+  - build
+  - test
+  - package
+
+build:
+  stage: build
+  image: node:14-alpine
+  script:
+    - npm ci --only=production
+  artifacts:
+    paths:
+      - node_modules/
+      - server.js
+
+unit tests:
+  stage: test
+  image: node:14-alpine
+  before_script:
+    - npm install
+  script:
+    - npm test
+
+build docker image:
+  stage: package
+  image: docker
+  services: 
+    - docker:dind
+  script: 
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
