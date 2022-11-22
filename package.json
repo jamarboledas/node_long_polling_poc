@@ -1,0 +1,17 @@
+{
+  "name": "node_gitlab_actions_poc",
+  "version": "1.0.0",
+  "description": "Node.js on Docker",
+  "author": "First Last <first.last@example.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "express": "^4.16.1"
+  },
+  "devDependencies": {  
+    "mocha": "^10.1.0"
+  }
+}
