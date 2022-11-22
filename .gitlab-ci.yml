@@ -3,7 +3,7 @@ stages:
   - test
   - package
   - acceptance
-  
+
 build:
   stage: build
   image: node:14-alpine
@@ -39,4 +39,6 @@ curl api testing:
     - name: $CI_REGISTRY_IMAGE
       alias: gitlab_actions_poc-api
   script: 
-    - curl -i http://gitlab_actions_poc-api:3000/status | grep "200"    
+    - docker run -d -p 3000:3000 $CI_REGISTRY_IMAGE
+    - apk add curl
+    - curl -i http://gitlab_actions_poc-api:3000/status | grep "200" 
