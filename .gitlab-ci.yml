@@ -43,4 +43,5 @@ curl api testing:
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin  
     - docker run -d -p 3000:3000 $CI_REGISTRY_IMAGE
     - apk add curl
+    - sleep 15
     - curl -i http://docker:3000/status | grep "200" 
