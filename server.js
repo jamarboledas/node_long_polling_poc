@@ -1,17 +1,7 @@
-'use strict';
-
 const express = require('express');
-
-// Constants
-const PORT = 8080;
-const HOST = '0.0.0.0';
-
-// App
+const router = require('./api/routes');
 const app = express();
-app.get('/status', (req, res) => {
-  res.send();
-});
 
-app.listen(PORT, HOST, () => {
-  console.log(`Running on http://${HOST}:${PORT}`);
-});
+app.use(router);
+
+app.listen(3000);
