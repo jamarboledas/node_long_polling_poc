@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 
 describe('Health Check',()=>{
   it('should return 200', (done) => {
-  chai.request('http://localhost:3000')
+  chai.request('http://docker:3000')
   .get('/status')
   .end( function(err,res){
   console.log(res.body)
