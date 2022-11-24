@@ -12,7 +12,7 @@ build:
   artifacts:
     paths:
       - node_modules/
-      - server.js
+      - src/server.js
 
 unit tests:
   stage: test
@@ -24,13 +24,17 @@ unit tests:
 
 build docker image:
   stage: package
-  image: docker
+  image: docker:latest
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: tcp://docker:2375/
   services: 
     - docker:dind
   script: 
-    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
-    - docker build -t $CI_REGISTRY_IMAGE .
-    - docker push $CI_REGISTRY_IMAGE
+    - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} ${CI_REGISTRY} --password-stdin
+    - docker build -t ${CI_REGISTRY_IMAGE}:latest .
+    - docker push ${CI_REGISTRY_IMAGE}:latest
 
 curl api testing:
   stage: acceptance
@@ -38,7 +42,7 @@ curl api testing:
   services: 
     - docker:dind
   script: 
-    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin  
-    - docker run -d -p 3000:3000 $CI_REGISTRY_IMAGE
+    - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} ${CI_REGISTRY} --password-stdin  
+    - docker run -d -p 3000:3000 ${CI_REGISTRY_IMAGE}:latest
     - apk add curl
     - curl -I http://docker:3000/status | grep "200"

@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const {healthCheck} = require('./health_check');
+const {healthCheck} = require('../controllers/health_check');
   
 router.use('/status', healthCheck);
 
