@@ -19,6 +19,8 @@ unit tests:
   image: node:14-alpine
   before_script:
     - npm install
+    - mkdir car-pooling-challenge/src/infrastructure/storage
+    - touch car-pooling-challenge/src/infrastructure/storage/cars.json
   script:
     - npm test
 
